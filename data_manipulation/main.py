@@ -1,6 +1,5 @@
 import json
 import time
-import connect2 
 import func01
 
 def final_dic_creator (dic0, dic1):
@@ -148,15 +147,10 @@ end = time.time()
 #almost there
 
 ########################data_dump#########################
-with open('FINAL_DIC.json', 'w') as output:
-    json.dump(more_dic, output)
+#with open('FINAL_DIC.json', 'w') as output:
+#    json.dump(more_dic, output)
 
-########################insert############################
-"""
-insert =  []
-connect2.insert_stuff(insert)
-"""
 #########################print#############################
 print(end -start)
 
-print(json.dumps(more_dic, indent = 4, sort_keys = True, separators = ("; ", " : ")))
+#print(json.dumps(more_dic, indent = 4, sort_keys = True, separators = ("; ", " : ")))
