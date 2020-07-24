@@ -29,10 +29,10 @@ def del_key (dic, arr):
 
                 del dic[e]
 
-def dic_creator (dic):
+def dic_creator (dic0):
 
     snd_dic = {}
-    for k, v in dic.items():
+    for k, v in dic0.items():
         
         if(k == "countriesAndTerritories" or k == "countryterritoryCode" or k == "popData2018" or k == "continentExp"):
 
@@ -52,4 +52,3 @@ def dic_creator_small(dic):
             third_dic[k] = v
 
     return third_dic;
-
