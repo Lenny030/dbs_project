@@ -9,6 +9,10 @@ def final_merge(dic0, dic1):
     for k0, v0 in dic0.items():
 
         for k1, v1 in dic1.items(): 
+
+            if k0 == "data_log":
+
+                snd_dic["first_rec"] = v0[-1]["dateRep"]
             
             snd_dic[k0] = v0
             
