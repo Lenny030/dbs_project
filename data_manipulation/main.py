@@ -2,23 +2,25 @@ import json
 import time
 import func01
 
-def final_dic_creator (dic0, dic1):
+def final_merge(dic0, dic1):
 
     snd_dic = {}
 
     for k0, v0 in dic0.items():
 
-        for k1, v1 in dic1.items():
+        for k1, v1 in dic1.items(): 
 
-            if k0 != "data_log" and k0 != "countryterritoryCode":
+            if k0 == "data_log":
 
-                snd_dic[k0] = v0
-                
-            if k1 != "continetExp" and k1 != "countriesAndTerritories":
+                snd_dic["first_rec"] = v0[-1]["dateRep"]
+            
+            snd_dic[k0] = v0
+            
+            if k1 == "median_age" or k1== "bed_per_1k" or k1 == "life_expectancy" or k1 == "gdp_per_capita":
 
                 snd_dic[k1] = v1
-
-    return snd_dic
+    
+    return snd_dic;
 
 def small_dic_enricher(dic):
     """
@@ -43,7 +45,6 @@ def small_dic_enricher(dic):
         if k == "new_deaths":
 
             third_dic["deaths"] = v
-
 
     return third_dic;
                 
@@ -71,6 +72,9 @@ def dic_enricher(dic):
         if k == "life_expectancy":
             snd_dic["life_expectancy"] = v
 
+        if k == "gdp_per_capita":
+            snd_dic["gdp_per_capita"] = v
+
         if k == "data":
 
             data = []
@@ -84,7 +88,7 @@ def dic_enricher(dic):
     return snd_dic;
 
 ##############reading the json file######################
-with open ("covid19_more01.json") as f:
+with open ("covid19_ecdc.json") as f:
     data0 = json.load(f)
 
 with open ("covid19_valid.json") as f:
@@ -140,17 +144,57 @@ more_dic = {}
 for k0, v0 in data0.items():
 
     more_dic[k0] = dic_enricher(v0)
+
+semi_dict["AI"]["countryterritoryCode"] = "AIA"
+semi_dict["FK"]["countryterritoryCode"] = "FLK"
+semi_dict["BQ"]["countryterritoryCode"] = "BES"
     
 end = time.time()
 
 ########################final_merge#######################
 #almost there
+with open ("data_file1.json") as f:
+    d0 = json.load(f)
+    
+with open ("data_file.json") as f:
+    d1 = json.load(f)
+    
+FINAL_DIC = {}    
+
+for k0, v0 in d0.items():
+
+    for k1, v1 in d1.items():
+
+        for k00, v00 in v0.items():
+
+            if k00 == "countryterritoryCode":
+
+                if k1 == v00:
+
+                    FINAL_DIC[k0] = final_merge(v0, v1)
+
+
 
 ########################data_dump#########################
-#with open('FINAL_DIC.json', 'w') as output:
-#    json.dump(more_dic, output)
+#dumps json file
+func01.dump_data(FINAL_DIC)
 
 #########################print#############################
 print(end -start)
 
+yeet = []
+
+for k, v in semi_dict.items():
+
+    for k0, v0 in v.items():
+
+        if k0 == "countryterritoryCode":
+
+            for k00, v00 in v.items():
+
+                if k00 == "popData2018":
+
+                    yeet.append((k, v0, v00))
+
+#print(len(FINAL_DIC))
 #print(json.dumps(more_dic, indent = 4, sort_keys = True, separators = ("; ", " : ")))

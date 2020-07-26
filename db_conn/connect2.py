@@ -43,11 +43,11 @@ def connect():
 def insert_stuff(country_data):
     """ connect to mysql-database """
 
-    query = "INSERT INTO country(continent, name, geo_id) " \
-            "VALUES(%s, %s, %s)"
+    query = "INSERT INTO country(continent, name, geo_id, pop_data, gdp_per_capita, median_age, bed_per_1k, first_rec)" \
+            "VALUES(%s, %s, %s, %s, %s, %s, %s, STR_TO_DATE(%s, '%d-%m-%Y'))"
     
     #single row
-    #for .commit() args = (continent, name, geo_id)
+    #for .commit() args = (, geo_id)
 
     db_config = read_db_config()
     conn = None

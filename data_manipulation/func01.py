@@ -17,7 +17,7 @@ def print_all (dic):
     return;
 
 def dump_data (dic):
-    with open("data_file.json" , "w") as write_file:
+    with open("FINAL.json" , "w") as write_file:
             json.dump(dic, write_file)
 
 def del_key (dic, arr):
@@ -47,8 +47,13 @@ def dic_creator_small(dic):
     third_dic = {}
     for k, v in dic.items():
 
-        if(k == "dateRep" or k == "cases" or k == "deaths"):
+        if(k == "cases" or k == "deaths"):
 
             third_dic[k] = v
+            
+        if(k == "dateRep"):
+
+            third_dic[k] = v.replace("/", "-") 
+
 
     return third_dic;
